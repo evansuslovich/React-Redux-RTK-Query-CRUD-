@@ -1,10 +1,26 @@
 // add imports
+
+import {
+    useGetTodosQuery, 
+} from "../apiSlice"
+
+
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
 import { faTrash, faUpload } from '@fortawesome/free-solid-svg-icons'
 import { useState } from "react"
 
 const TodoList = () => {
     const [newTodo, setNewTodo] = useState('')
+
+
+    // this custom hook is being created for us 
+    const {
+        data: todos, 
+        isLoading, 
+        isSuccesss, 
+        isError,
+        error
+    } = useGetTodosQuery()
 
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -32,6 +48,14 @@ const TodoList = () => {
 
     let content;
     // Define conditional content
+    
+    if(isLoading) {
+        content = <p>Loading...</p>
+    } else if (isSuccesss) {
+        content = JSON.stringify(todos)
+    } else if (isError) {
+        content= <p>{error}</p>
+    }
 
     return (
         <main>
