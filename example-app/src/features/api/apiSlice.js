@@ -9,8 +9,6 @@ import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 // fetchBaseQuery 
 // imports tools for react 
 
-
-
 // object 
 export const apiSlice = createApi({
     
@@ -26,21 +24,17 @@ export const apiSlice = createApi({
     endpoints: (builder) => ({
         // methods 
         
-
         // get all of the todos
         getTodos: builder.query({
             query: () => '/todos', // gets it using an http get method 
             transformResponse: res => res.sort((a, b) => b.id - a.id), // descending order 
             providesTags: ['Todos'] // when we use builder mutations below 
-
         }), 
-
 
         //addTodo method: different because instead of builder.query it is builder dot mutation 
         // and and the rex tof our methods are going to be mutations which is going to mean we are 
         // not just requesting or querying the data but instead modifying (mutating)
         addTodo: builder.mutation({
-
             query: (todo) => ({
                 //we are putting a url instead of just having a default 
                 url: '/todos',
@@ -52,7 +46,6 @@ export const apiSlice = createApi({
             invalidatesTags: ['Todos']
         }),
 
-
         // update method
         updateTodo: builder.mutation({
             query: (todo) => ({
@@ -63,7 +56,6 @@ export const apiSlice = createApi({
                 body: todo
             }), 
             invalidatesTags: ['Todos']
-
         }), 
 
         deleteTodo: builder.mutation({
@@ -77,21 +69,15 @@ export const apiSlice = createApi({
                 body: id
             }), 
             invalidatesTags: ['Todos']
-
-            
         })
-
-
     })
 })
 
+
+// hooks 
 export const {
     useGetTodosQuery,
-
-    // all mutations 
     useAddTodoMutation,
     useUpdateTodoMutation, 
     useDeleteTodoMutation
-
-    
 } = apiSlice
