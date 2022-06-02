@@ -2,7 +2,7 @@
 
 import {
     useGetTodosQuery, 
-} from "../apiSlice"
+} from "../api/apiSlice"
 
 
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome'
@@ -48,7 +48,7 @@ const TodoList = () => {
 
     let content;
     // Define conditional content
-    
+
     if(isLoading) {
         content = <p>Loading...</p>
     } else if (isSuccesss) {
