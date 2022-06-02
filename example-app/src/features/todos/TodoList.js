@@ -19,7 +19,7 @@ const TodoList = () => {
     const {
         data: todos, 
         isLoading, 
-        isSuccesss, 
+        isSuccess, 
         isError,
         error
     } = useGetTodosQuery()
@@ -60,7 +60,7 @@ const TodoList = () => {
 
     if(isLoading) {
         content = <p>Loading...</p>
-    } else if (isSuccesss) {
+    } else if (isSuccess) {
 
         // mapping over all the todos 
         content = todos.map(todo => { //JSON.stringify(todos)
