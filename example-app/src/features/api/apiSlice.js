@@ -3,7 +3,7 @@
 // how we name things in redux 
 
 
-import {createApi, fetchBaseQuery} from '@reduxjs/toolkit/query/react'
+import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react'
 
 // createApi 
 // fetchBaseQuery 
@@ -20,15 +20,19 @@ export const apiSlice = createApi({
     // baseQuery uses fetchBaseQuery 
     // baseURL: looks very familiar with axios (using json server)
     baseQuery: fetchBaseQuery({baseUrl:  'http://localhost:3500' }),
+    tagTypes: ['Todos'], 
 
     //we're defining endpoints for the api to interact with (builder) cases 
-    endpoints : (builder) => ({
+    endpoints: (builder) => ({
         // methods 
         
 
         // get all of the todos
         getTodos: builder.query({
-            query : () => '/todos', // gets it using an http get method 
+            query: () => '/todos', // gets it using an http get method 
+            transformResponse: res => res.sort((a, b) => b.id - a.id), // descending order 
+            providesTags: ['Todos'] // when we use builder mutations below 
+
         }), 
 
 
@@ -44,7 +48,8 @@ export const apiSlice = createApi({
                 method: 'POST',
                 // in the body of this request we are going to just putting 
                 body: todo
-            })
+            }), 
+            invalidatesTags: ['Todos']
         }),
 
 
@@ -56,7 +61,9 @@ export const apiSlice = createApi({
                 // we can use PATCH or PUT (patch is updating part of the record )
                 method: 'PATCH', 
                 body: todo
-            })
+            }), 
+            invalidatesTags: ['Todos']
+
         }), 
 
         deleteTodo: builder.mutation({
@@ -68,7 +75,10 @@ export const apiSlice = createApi({
                 method: 'DELETE', 
                 // the body only contains the id because its the only thing we need to delete the todo
                 body: id
-            })
+            }), 
+            invalidatesTags: ['Todos']
+
+            
         })
 
 
